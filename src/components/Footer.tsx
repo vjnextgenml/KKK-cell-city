@@ -51,8 +51,8 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-slate-200 bg-white">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <section className="newsletter-panel mb-14 flex flex-col justify-between gap-7 rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50 via-white to-blue-50 p-6 shadow-[0_12px_36px_rgba(37,99,235,0.07)] sm:p-8 lg:flex-row lg:items-center">
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+        <section className="newsletter-panel mb-8 flex flex-col justify-between gap-4 rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50 via-white to-blue-50 p-4 shadow-[0_12px_36px_rgba(37,99,235,0.07)] sm:mb-14 sm:gap-7 sm:p-8 lg:flex-row lg:items-center">
           <div className="max-w-lg">
             <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">
               Stay connected
@@ -89,7 +89,7 @@ export default function Footer() {
           </form>
         </section>
 
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1.2fr]">
+        <div className="grid gap-6 sm:grid-cols-2 sm:gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1.2fr]">
           <div>
             <Link to="/" className="inline-flex items-center gap-2.5">
               <span className="flex h-10 w-10 items-center justify-center">
@@ -101,10 +101,10 @@ export default function Footer() {
               </span>
               <span className="text-base font-bold text-slate-900">KKK Cell City</span>
             </Link>
-            <p className="mt-4 max-w-xs text-sm leading-6 text-slate-600">
+            <p className="mt-3 max-w-xs text-sm leading-6 text-slate-600 sm:mt-4">
               Your trusted destination for the latest tech, friendly advice, and expert mobile care in Perambalur.
             </p>
-            <div className="mt-5 flex gap-2">
+            <div className="mt-4 flex gap-2 sm:mt-5">
               <a className="icon-button" href="https://www.instagram.com/" aria-label="Instagram"><Instagram size={17} /></a>
               <a className="icon-button" href="https://www.facebook.com/" aria-label="Facebook"><Facebook size={17} /></a>
             </div>
@@ -112,8 +112,8 @@ export default function Footer() {
 
           {footerGroups.map((group) => (
             <div key={group.title}>
-              <h3 className="mb-4 text-sm font-semibold text-slate-900">{group.title}</h3>
-              <ul className="space-y-3">
+              <h3 className="mb-2 text-sm font-semibold text-slate-900 sm:mb-4">{group.title}</h3>
+              <ul className="space-y-2 sm:space-y-3">
                 {group.links.map(([label, to]) => (
                   <li key={label}>
                     <Link to={to} className="text-sm text-slate-600 transition hover:text-blue-700">{label}</Link>
@@ -124,7 +124,7 @@ export default function Footer() {
           ))}
 
           <div>
-            <h3 className="mb-4 text-sm font-semibold text-slate-900">Visit our showroom</h3>
+            <h3 className="mb-2 text-sm font-semibold text-slate-900 sm:mb-4">Visit our showroom</h3>
             <p className="flex gap-2 text-sm leading-6 text-slate-600">
               <MapPin size={17} className="mt-0.5 shrink-0 text-blue-400" />
               Main Showroom: Old Bus Stand, Perambalur
@@ -137,7 +137,7 @@ export default function Footer() {
             <p className="mt-3 text-xs leading-5 text-slate-500">
               Illustrative hours: 10:00 AM – 9:00 PM. Please confirm before visiting.
             </p>
-            <h3 className="mb-3 mt-6 text-xs font-semibold uppercase tracking-wider text-slate-600">We accept</h3>
+            <h3 className="mb-3 mt-4 text-xs font-semibold uppercase tracking-wider text-slate-600 sm:mt-6">We accept</h3>
             <div className="flex flex-wrap gap-2">
               {["VISA", "mastercard", "Apple Pay", "PayPal"].map((method) => (
                 <span key={method} className="rounded-md border border-slate-200 bg-slate-50 px-2 py-1 text-[10px] font-semibold text-slate-600">
@@ -148,7 +148,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-slate-200 pt-6 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-8 flex flex-col gap-2 border-t border-slate-200 pt-4 text-xs text-slate-500 sm:mt-12 sm:flex-row sm:items-center sm:justify-between sm:gap-3 sm:pt-6">
           <p>© {new Date().getFullYear()} KKK Cell City. All rights reserved.</p>
           <p>Thoughtful tech. Trusted locally.</p>
         </div>

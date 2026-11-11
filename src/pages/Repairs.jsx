@@ -2,17 +2,10 @@
 import { useState } from "react";
 import {
   ArrowRight,
-  BatteryCharging,
-  Cable,
   CheckCircle2,
-  Clock3,
-  Droplets,
   MessageCircle,
-  Mic2,
   Phone,
-  Settings2,
   ShieldCheck,
-  Smartphone,
   Wrench,
 } from "lucide-react";
 import Footer from "../components/Footer";
@@ -23,52 +16,36 @@ const services = [
     name: "Display replacement",
     description:
       "Support for cracked glass, unresponsive touch, lines, or other display problems.",
-    guidance: "Assessment first; parts and repair time depend on your device.",
-    icon: Smartphone,
     image: "/images/focused-smartphone-repair-workshop.png",
   },
   {
     name: "Battery replacement",
     description:
       "Replacement support to help restore dependable battery life and everyday use.",
-    guidance: "Battery health and device model checked before a quote.",
-    icon: BatteryCharging,
-    image: "/images/repair-service-battery-replacement.jpg",
+    image: "/images/repair-battery-replacement.jpg",
   },
   {
     name: "Charging port repair",
     description:
       "Help with loose connections, slow charging, or other charging-port issues.",
-    guidance: "Port and cable inspected to identify the cause.",
-    icon: Cable,
+    image: "/images/repair-charging-port.jpg",
   },
   {
     name: "Software support",
     description:
       "Help with updates, device setup, performance, and common software problems.",
-    guidance: "Many software checks can be assessed during a store visit.",
-    icon: Settings2,
+    image: "/images/repair-software-support.jpg",
   },
   {
     name: "Speaker & microphone repair",
     description:
       "Get help with call audio, unclear microphones, or speaker sound issues.",
-    guidance: "Audio components tested before recommending a repair.",
-    icon: Mic2,
+    image: "/images/repair-speaker-microphone.jpg",
   },
   {
     name: "Water damage care",
     description:
       "Inspection and practical guidance after accidental liquid exposure.",
-    guidance: "Power off the device and do not charge it; bring it in promptly.",
-    icon: Droplets,
-  },
-  {
-    name: "General mobile repairs",
-    description:
-      "Diagnostics and support for a range of mobile device issues.",
-    guidance: "We’ll assess the issue and explain the next steps before work.",
-    icon: Wrench,
     image: "/images/focused-smartphone-repair-workshop.png",
   },
 ];
@@ -175,7 +152,7 @@ export default function Repairs({ cartCount }) {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {services.map(({ name, description, guidance, icon: Icon, image }) => (
+            {services.map(({ name, description, image }) => (
               <article
                 key={name}
                 className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.045)] transition duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-glow"
@@ -185,56 +162,16 @@ export default function Repairs({ cartCount }) {
                     src={image}
                     alt={`${name} service`}
                     loading="lazy"
-                    className={`h-32 w-full bg-slate-50 object-contain p-2 lg:h-24 ${name === "Battery replacement" ? "rotate-180" : ""}`}
+                    className="h-48 w-full object-cover lg:h-40"
                   />
                 )}
                 <div className="flex flex-1 flex-col p-4 sm:p-5 lg:p-4">
-                <div className="flex items-start justify-between gap-3">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-blue-100 bg-blue-50 text-blue-700">
-                    <Icon size={20} />
-                  </span>
-                  <span className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[10px] font-medium text-slate-600">
-                    Assessment first
-                  </span>
-                </div>
-                <h3 className="mt-4 text-base font-semibold text-white lg:mt-3">
+                <h3 className="text-base font-semibold text-white">
                   {name}
                 </h3>
                 <p className="mt-2 flex-1 text-sm leading-6 text-slate-400">
                   {description}
                 </p>
-                <p className="mt-3 flex gap-2 rounded-lg bg-slate-50 px-3 py-2 text-xs leading-5 text-slate-600">
-                  <Clock3 size={15} className="mt-0.5 shrink-0 text-blue-400" />
-                  <span>
-                    <span className="font-medium text-slate-800">
-                      Estimated guidance:{" "}
-                    </span>
-                    {guidance}
-                  </span>
-                </p>
-                {name === "Battery replacement" && (
-                  <p className="mt-2 text-[10px] leading-4 text-slate-500">
-                    Photo by{" "}
-                    <a
-                      className="underline"
-                      href="https://commons.wikimedia.org/wiki/File:IPhonedriod.Repairservice%E2%80%99s.jpg"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Phonerepair1
-                    </a>
-                    {" "}·{" "}
-                    <a
-                      className="underline"
-                      href="https://creativecommons.org/licenses/by-sa/4.0/"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      CC BY-SA 4.0
-                    </a>
-                    {" "}via Wikimedia Commons (orientation corrected)
-                  </p>
-                )}
                 <button
                   type="button"
                   onClick={() => chooseService(name)}
