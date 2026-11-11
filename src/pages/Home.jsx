@@ -108,15 +108,7 @@ export default function Home({ cartCount }) {
   const [activeProduct, setActiveProduct] = useState(
     /** @type {import("../data/products").Product | null} */ (null),
   );
-  const featuredProducts = [
-    "iPhone 15",
-    "Galaxy S24",
-    "V30",
-    "Redmi Note 13 Pro",
-    "Reno 11",
-  ]
-    .map((name) => products.find((product) => product.name === name))
-    .filter((product) => product !== undefined);
+  const featuredProducts = products.slice(0, 5);
 
   return (
     <div className="light-theme min-h-screen bg-ink text-slate-200">
@@ -262,15 +254,9 @@ export default function Home({ cartCount }) {
           <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
             <div className="mb-7 flex items-end justify-between gap-4">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-400">
-                  Everyday essentials
-                </p>
-                <h2 id="accessories-heading" className="mt-2 text-2xl font-bold text-white sm:text-3xl">
+                <h2 id="accessories-heading" className="text-2xl font-bold text-white sm:text-3xl">
                   Essential Accessories
                 </h2>
-                <p className="mt-2 text-sm text-slate-400">
-                  Useful add-ons to power, protect, and personalize your phone.
-                </p>
               </div>
               <Link
                 to="/categories"
@@ -279,23 +265,22 @@ export default function Home({ cartCount }) {
                 Browse accessories <ArrowRight size={15} />
               </Link>
             </div>
-            <div className="grid grid-cols-4 gap-2 sm:gap-4">
-              {accessories.map(({ name, detail, image, imageAlt }) => (
+            <div className="grid grid-cols-4 gap-3 sm:gap-5">
+              {accessories.map(({ name, image, imageAlt }) => (
                 <Link
                   key={name}
                   to="/categories"
-                  className="group flex min-w-0 flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-glow sm:rounded-2xl"
+                  className="group flex min-h-32 min-w-0 flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-glow sm:min-h-64 sm:rounded-2xl"
                 >
                   <img
                     src={image}
                     alt={imageAlt}
                     loading="lazy"
-                    className="h-12 w-full bg-slate-50 object-contain p-1 transition duration-500 sm:h-24 sm:p-2"
+                    className="h-20 w-full bg-white object-contain sm:h-40"
                   />
-                  <div className="flex flex-1 flex-col p-2 sm:p-4">
-                    <h3 className="text-[10px] font-semibold leading-tight text-white sm:text-sm">{name}</h3>
-                    <p className="mt-2 hidden flex-1 text-sm leading-6 text-slate-400 sm:block">{detail}</p>
-                    <span className="mt-2 inline-flex items-center gap-0.5 text-[9px] font-semibold text-blue-400 sm:mt-4 sm:gap-1 sm:text-xs">
+                  <div className="flex flex-1 flex-col p-2.5 sm:p-5">
+                    <h3 className="text-[10px] font-semibold leading-tight text-white sm:text-base">{name}</h3>
+                    <span className="mt-2 inline-flex items-center gap-0.5 text-[9px] font-semibold text-blue-400 sm:mt-4 sm:gap-1 sm:text-sm">
                       <span className="sm:hidden">Explore</span>
                       <span className="hidden sm:inline">Explore category</span>
                       <ArrowRight size={12} className="transition group-hover:translate-x-1 sm:h-[14px] sm:w-[14px]" />
@@ -364,9 +349,9 @@ export default function Home({ cartCount }) {
                   href="https://wa.me/919751211787?text=Hello%20KKK%20Cell%20City%2C%20I%27d%20like%20to%20inquire%20about%20a%20mobile%20repair."
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-xl border border-slate-700/80 bg-slate-800/60 px-4 py-3 text-sm font-semibold text-slate-200 transition hover:border-emerald-500/30 hover:text-white"
+                  className="inline-flex items-center gap-2 rounded-xl border border-[#25D366] bg-[#25D366] px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:border-[#1DA851] hover:bg-[#1DA851]"
                 >
-                  <MessageCircle size={16} className="text-emerald-400" />
+                  <MessageCircle size={16} className="text-white" />
                   WhatsApp Inquiry
                 </a>
               </div>

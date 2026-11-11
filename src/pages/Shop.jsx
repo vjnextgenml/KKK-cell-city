@@ -2,11 +2,10 @@
 import { useEffect, useMemo, useState } from "react";
 import {
   ArrowDownUp,
-  ArrowRight,
   Search,
   X,
 } from "lucide-react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
@@ -22,6 +21,7 @@ export default function Shop({
 }) {
   const [searchParams] = useSearchParams();
   const [search, setSearch] = useState(searchParams.get("q") ?? "");
+  const [selectedBrand, setSelectedBrand] = useState("");
   const [sort, setSort] = useState("popular");
   const [activeProduct, setActiveProduct] = useState(
     /** @type {import("../data/products").Product | null} */ (null),
@@ -33,23 +33,27 @@ export default function Shop({
 
   const visibleProducts = useMemo(() => {
     const query = search.trim().toLowerCase();
-    const filtered = products.filter((product) =>
-      `${product.name} ${product.brand} ${product.category ?? ""}`
+    const filtered = products.filter((product) => {
+      const matchesQuery = `${product.name} ${product.brand} ${product.category ?? ""}`
         .toLowerCase()
-        .includes(query),
-    );
+        .includes(query);
+      return matchesQuery && (!selectedBrand || product.brand === selectedBrand);
+    });
 
     if (sort === "price-low") return filtered.sort((a, b) => a.price - b.price);
     if (sort === "price-high") return filtered.sort((a, b) => b.price - a.price);
     return filtered;
-  }, [search, sort]);
+  }, [search, selectedBrand, sort]);
+
+  const brands = [...new Set(products.map((product) => product.brand))];
 
   function clearSearch() {
     setSearch("");
+    setSelectedBrand("");
   }
 
   const productGrid = visibleProducts.length ? (
-    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 xl:grid-cols-4">
       {visibleProducts.map((product) => (
         <ProductCard
           key={product.name}
@@ -94,12 +98,6 @@ export default function Shop({
                 Explore our phones and discover your next everyday essential.
               </p>
             </div>
-            <Link
-              to="/categories"
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-400 transition hover:text-blue-300"
-            >
-              Browse categories <ArrowRight size={15} />
-            </Link>
           </div>
         </div>
 
@@ -142,6 +140,36 @@ export default function Shop({
               </option>
             </select>
           </label>
+        </div>
+
+        <div className="mb-5 flex flex-wrap gap-2" role="group" aria-label="Filter by phone brand">
+          <button
+            type="button"
+            onClick={() => setSelectedBrand("")}
+            aria-pressed={!selectedBrand}
+            className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
+              !selectedBrand
+                ? "border-blue-600 bg-blue-600 text-white"
+                : "border-slate-200 bg-white text-slate-700 hover:border-blue-300 hover:text-blue-700"
+            }`}
+          >
+            All brands
+          </button>
+          {brands.map((brand) => (
+            <button
+              key={brand}
+              type="button"
+              onClick={() => setSelectedBrand(brand)}
+              aria-pressed={selectedBrand === brand}
+              className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
+                selectedBrand === brand
+                  ? "border-blue-600 bg-blue-600 text-white"
+                  : "border-slate-200 bg-white text-slate-700 hover:border-blue-300 hover:text-blue-700"
+              }`}
+            >
+              {brand}
+            </button>
+          ))}
         </div>
 
         <div>

@@ -21,7 +21,7 @@ export const products: Product[] = [
     category: "Smartphones",
   },
   {
-    name: "Galaxy S24",
+    name: "Samsung Galaxy S24",
     brand: "Samsung",
     price: 72999,
     listPrice: 79999,
@@ -31,7 +31,7 @@ export const products: Product[] = [
     category: "Smartphones",
   },
   {
-    name: "V30",
+    name: "Vivo V30",
     brand: "Vivo",
     price: 30999,
     listPrice: 33999,
@@ -41,7 +41,7 @@ export const products: Product[] = [
     category: "Smartphones",
   },
   {
-    name: "Reno 11",
+    name: "Oppo Reno 11",
     brand: "OPPO",
     price: 26999,
     listPrice: 29999,
@@ -66,6 +66,7 @@ export const products: Product[] = [
     listPrice: 29999,
     color: "from-yellow-300/25 via-amber-500/10 to-transparent",
     initials: "12",
+    image: "/images/phone-realme-12-pro-plus.jpg",
     category: "Smartphones",
   },
 ];

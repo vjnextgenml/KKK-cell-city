@@ -33,7 +33,7 @@ export default function Navbar(_props: NavbarProps) {
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/90 shadow-[0_2px_16px_rgba(15,23,42,0.04)] backdrop-blur-xl">
-      <div className="mx-auto flex max-w-7xl items-center gap-6 px-4 py-3 sm:px-6 lg:px-8">
+      <div className="relative mx-auto flex max-w-7xl items-center gap-6 px-4 py-3 sm:px-6 lg:px-8">
         <Link
           to="/"
           className="group flex shrink-0 items-center gap-2.5"
@@ -75,59 +75,51 @@ export default function Navbar(_props: NavbarProps) {
           </nav>
 
           <div className="flex items-center gap-2">
-          <form
-            onSubmit={submitSearch}
-            className="hidden w-40 items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 transition focus-within:border-blue-400 focus-within:bg-white focus-within:ring-4 focus-within:ring-blue-500/10 md:flex xl:w-48"
-            role="search"
-          >
-            <Search size={16} className="shrink-0 text-slate-400" />
-            <input
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search phones..."
-              aria-label="Search phones"
-              className="w-full bg-transparent text-xs text-slate-800 outline-none placeholder:text-slate-400"
-            />
-            <button type="submit" className="sr-only">
-              Search
+            {searchOpen ? (
+              <form
+                onSubmit={submitSearch}
+                role="search"
+                className="absolute left-4 right-16 top-1/2 z-20 flex -translate-y-1/2 items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-lg focus-within:border-blue-400 focus-within:ring-4 focus-within:ring-blue-500/10 md:static md:w-40 md:translate-y-0 md:shadow-none xl:w-48"
+              >
+                <input
+                  autoFocus
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder="Search phones..."
+                  aria-label="Search phones"
+                  className="min-w-0 w-full bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400 md:text-xs"
+                />
+                <button type="submit" aria-label="Submit search" className="shrink-0 text-slate-500 transition hover:text-blue-700">
+                  <Search size={17} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSearchOpen(false)}
+                  aria-label="Close search"
+                  className="shrink-0 text-slate-500 transition hover:text-slate-900"
+                >
+                  <X size={17} />
+                </button>
+              </form>
+            ) : (
+              <button
+                onClick={() => setSearchOpen(true)}
+                className="icon-button"
+                aria-label="Open search"
+              >
+                <Search size={19} />
+              </button>
+            )}
+            <button
+              onClick={() => setMenuOpen((open) => !open)}
+              className="icon-button relative z-30 lg:hidden"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+            >
+              {menuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
-          </form>
-          <button
-            onClick={() => setSearchOpen((open) => !open)}
-            className="icon-button md:hidden"
-            aria-label={searchOpen ? "Close search" : "Open search"}
-          >
-            {searchOpen ? <X size={19} /> : <Search size={19} />}
-          </button>
-          <button
-            onClick={() => setMenuOpen((open) => !open)}
-            className="icon-button lg:hidden"
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
-          >
-            {menuOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
           </div>
         </div>
       </div>
-
-      {searchOpen && (
-        <form onSubmit={submitSearch} className="border-t border-slate-200 px-4 py-3 md:hidden">
-          <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 focus-within:border-blue-400">
-            <Search size={17} className="text-slate-400" />
-            <input
-              autoFocus
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search phones and accessories..."
-              aria-label="Search phones and accessories"
-              className="w-full bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400"
-            />
-            <button type="submit" aria-label="Submit search" className="text-blue-400">
-              <Search size={18} />
-            </button>
-          </div>
-        </form>
-      )}
 
       {menuOpen && (
         <nav className="border-t border-slate-200 bg-white px-4 py-3 lg:hidden" aria-label="Mobile navigation">
