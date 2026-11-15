@@ -1,0 +1,133 @@
+{
+  "planHash": "2c83191e3ff17605c35127dc5ff747c182e4cca4e4cbed54da72af7e817126ac",
+  "phase": "standalone",
+  "recordedAtUtc": "2026-11-15T15:54:36.3325964Z",
+  "retryCount": 0,
+  "resetBaseline": false,
+  "complete": true,
+  "result": {
+    "setupSucceeded": true,
+    "setupDurationMs": 0,
+    "setupFailureOutput": null,
+    "assertions": [
+      {
+        "name": "production-build",
+        "kind": "process",
+        "verificationMethod": "exit-code",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": 0,
+        "outputSample": "\r\n\u003E kkk-cell-city@1.0.0 build\r\n\u003E node ./node_modules/typescript/bin/tsc -b \u0026\u0026 node ./node_modules/vite/bin/vite.js build\r\n\r\n\u001B[36mvite v6.4.6 \u001B[32mbuilding for production...\u001B[36m\u001B[39m\r\ntransforming...\r\n\u001B[32m\u2713\u001B[39m 1611 modules transformed.\r\nrendering chunks...\r\ncomputing gzip size...\r\n\u001B[2mdist/\u001B[22m\u001B[32mindex.html                 \u001B[39m\u001B[1m\u001B[2m  1.02 kB\u001B[22m\u001B[1m\u001B[22m\u001B[2m \u2502 gzip:  0.53 kB\u001B[22m\r\n\u001B[2mdist/\u001B[22m\u001B[35massets/index-DWbIU0r8.css  \u001B[39m\u001B[1m\u001B[2m 61.66 kB\u001B[22m\u001B[1m\u001B[22m\u001B[2m \u2502 gzip: 11.23 kB\u001B[22m\r\n\u001B[2mdist/\u001B[22m\u001B[36massets/index-BN8KRv5F.js   \u001B[39m\u001B[1m\u001B[2m301.85 kB\u001B[22m\u001B[1m\u001B[22m\u001B[2m \u2502 gzip: 88.41 kB\u001B[22m\r\n\u001B[32m\u2713 built in 2.56s\u001B[39m\r\n",
+        "durationMs": 5527
+      },
+      {
+        "name": "tests-pass",
+        "kind": "process",
+        "verificationMethod": "test-results",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": 0,
+        "outputSample": "\r\n\u003E kkk-cell-city@1.0.0 test\r\n\u003E vitest run\r\n\r\n\r\n\u001B[1m\u001B[46m RUN \u001B[49m\u001B[22m \u001B[36mv3.2.7 \u001B[39m\u001B[90mD:/Projects/KKK-Cell-City\u001B[39m\r\n\r\n \u001B[32m\u2713\u001B[39m src/admin/auth.test.ts \u001B[2m(\u001B[22m\u001B[2m2 tests\u001B[22m\u001B[2m)\u001B[22m\u001B[32m 3\u001B[2mms\u001B[22m\u001B[39m\r\n\u001B[90mstderr\u001B[2m | src/pages/AdminLogin.test.tsx\u001B[2m \u003E \u001B[22m\u001B[2madmin login page\u001B[2m \u003E \u001B[22m\u001B[2mrenders a separate login form and warns that frontend credentials are not secure\r\n\u001B[22m\u001B[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer\u0027s output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.\r\n    at MemoryRouter (file:///D:/Projects/KKK-Cell-City/node_modules/react-router/dist/development/chunk-6KYCQHYJ.mjs:7049:3)\r\nWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer\u0027s output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.\r\n    at AdminLogin (D:\\Projects\\KKK-Cell-City\\src\\pages\\AdminLogin.tsx:10:23)\r\n    at Router (file:///D:/Projects/KKK-Cell-City/node_modules/react-router/dist/development/chunk-6KYCQHYJ.mjs:7139:13)\r\n    at MemoryRouter (file:///D:/Projects/KKK-Cell-City/node_modules/react-router/dist/development/chunk-6KYCQHYJ.mjs:7049:3)\r\nWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer\u0027s output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.\r\n    at LinkWithRef (file:///D:/Projects/KKK-Cell-City/node_modules/react-router/dist/development/chunk-6KYCQHYJ.mjs:10629:5)\r\n    at section\r\n    at main\r\n    at AdminLogin (D:\\Projects\\KKK-Cell-City\\src\\pages\\AdminLogin.tsx:10:23)\r\n    at Router (file:///D:/Projects/KKK-Cell-City/node_modules/react-router/dist/development/chunk-6KYCQHYJ.mjs:7139:13)\r\n    at MemoryRouter (file:///D:/Projects/KKK-Cell-City/node_modules/react-router/dist/development/chunk-6KYCQHYJ.mjs:7049:3)\r\n\r\n \u001B[32m\u2713\u001B[39m src/pages/AdminLogin.test.tsx \u001B[2m(\u001B[22m\u001B[2m1 test\u001B[22m\u001B[2m)\u001B[22m\u001B[32m 27\u001B[2mms\u001B[22m\u001B[39m\r\n \u001B[32m\u2713\u001B[39m src/admin/specificationDefaults.test.ts \u001B[2m(\u001B[22m\u001B[2m13 tests\u001B[22m\u001B[2m)\u001B[22m\u001B[32m 8\u001B[2mms\u001B[22m\u001B[39m\r\n \u001B[32m\u2713\u001B[39m src/admin/productService.test.ts \u001B[2m(\u001B[22m\u001B[2m5 tests\u001B[22m\u001B[2m)\u001B[22m\u001B[32m 11\u001B[2mms\u001B[22m\u001B[39m\r\n \u001B[32m\u2713\u001B[39m src/admin/components/ProductForm.test.tsx \u001B[2m(\u001B[22m\u001B[2m4 tests\u001B[22m\u001B[2m)\u001B[22m\u001B[32m 38\u001B[2mms\u001B[22m\u001B[39m\r\n\u001B[90mstderr\u001B[2m | src/pages/ProductDetails.test.tsx\u001B[2m \u003E \u001B[22m\u001B[2mproduct details page\u001B[2m \u003E \u001B[22m\u001B[2mrenders the mobile name, details sections, and three image controls\r\n\u001B[22m\u001B[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer\u0027s output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.\r\n    at MemoryRouter (file:///D:/Projects/KKK-Cell-City/node_modules/react-router/dist/development/chunk-6KYCQHYJ.mjs:7049:3)\r\nWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer\u0027s output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.\r\n    at Navbar (D:\\Projects\\KKK-Cell-City\\sr\n\u2026[truncated]",
+        "durationMs": 2319,
+        "testResults": {
+          "testFramework": "vitest",
+          "runnerDetectedFrom": "package_json",
+          "testsTotal": 28,
+          "testsPassed": 28,
+          "testsFailed": 0,
+          "testsSkipped": 0,
+          "parseFailed": false
+        }
+      },
+      {
+        "name": "home-route-serves",
+        "kind": "http-probe",
+        "verificationMethod": "http-status",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": null,
+        "outputSample": "HTTP 200\n\u003C!doctype html\u003E\r\n\u003Chtml lang=\u0022en\u0022\u003E\r\n  \u003Chead\u003E\n    \u003Cscript type=\u0022module\u0022\u003Eimport { injectIntoGlobalHook } from \u0022/@react-refresh\u0022;\ninjectIntoGlobalHook(window);\nwindow.$RefreshReg$ = () =\u003E {};\nwindow.$RefreshSig$ = () =\u003E (type) =\u003E type;\u003C/script\u003E\n\n    \u003Cscript type=\u0022module\u0022 src=\u0022/@vite/client\u0022\u003E\u003C/script\u003E\n\r\n    \u003Cmeta charset=\u0022UTF-8\u0022 /\u003E\r\n    \u003Cmeta name=\u0022viewport\u0022 content=\u0022width=device-width, initial-scale=1.0\u0022 /\u003E\r\n    \u003Cmeta name=\u0022theme-color\u0022 content=\u0022#f8fafc\u0022 /\u003E\r\n    \u003Cmeta\r\n      name=\u0022description\u0022\r\n      content=\u0022Shop smartphones, accessories, and trusted mobile repair services at KKK Cell City in Perambalur.\u0022\r\n    /\u003E\r\n    \u003Clink rel=\u0022icon\u0022 type=\u0022image/png\u0022 href=\u0022/images/kkk-cell-city-mark.png\u0022 /\u003E\r\n    \u003Clink rel=\u0022preconnect\u0022 href=\u0022https://fonts.googleapis.com\u0022 /\u003E\r\n    \u003Clink rel=\u0022preconnect\u0022 href=\u0022https://fonts.gstatic.com\u0022 crossorigin /\u003E\r\n    \u003Clink\r\n      href=\u0022https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800\u0026display=swap\u0022\r\n      rel=\u0022stylesheet\u0022\r\n    /\u003E\r\n    \u003Ctitle\u003EKKK Cell City | Your Trusted Tech Destination\u003C/title\u003E\r\n  \u003C/head\u003E\r\n  \u003Cbody\u003E\r\n    \u003Cdiv id=\u0022root\u0022\u003E\u003C/div\u003E\r\n    \u003Cscript type=\u0022module\u0022 src=\u0022/src/main.tsx\u0022\u003E\u003C/script\u003E\r\n  \u003C/body\u003E\r\n\u003C/html\u003E\r\n\n--- server output ---\n\r\n\u003E kkk-cell-city@1.0.0 dev\r\n\u003E vite --host 127.0.0.1 --port 5174 --strictPort\r\n\r\n\r\n  \u001B[32m\u001B[1mVITE\u001B[22m v6.4.6\u001B[39m  \u001B[2mready in \u001B[0m\u001B[1m375\u001B[22m\u001B[2m\u001B[0m ms\u001B[22m\r\n\r\n  \u001B[32m\u279C\u001B[39m  \u001B[1mLocal\u001B[22m:   \u001B[36mhttp://127.0.0.1:\u001B[1m5174\u001B[22m/\u001B[39m\r\n",
+        "durationMs": 1068
+      },
+      {
+        "name": "samsung-details-route-serves",
+        "kind": "http-probe",
+        "verificationMethod": "http-status",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": null,
+        "outputSample": "HTTP 200\n\u003C!doctype html\u003E\r\n\u003Chtml lang=\u0022en\u0022\u003E\r\n  \u003Chead\u003E\n    \u003Cscript type=\u0022module\u0022\u003Eimport { injectIntoGlobalHook } from \u0022/@react-refresh\u0022;\ninjectIntoGlobalHook(window);\nwindow.$RefreshReg$ = () =\u003E {};\nwindow.$RefreshSig$ = () =\u003E (type) =\u003E type;\u003C/script\u003E\n\n    \u003Cscript type=\u0022module\u0022 src=\u0022/@vite/client\u0022\u003E\u003C/script\u003E\n\r\n    \u003Cmeta charset=\u0022UTF-8\u0022 /\u003E\r\n    \u003Cmeta name=\u0022viewport\u0022 content=\u0022width=device-width, initial-scale=1.0\u0022 /\u003E\r\n    \u003Cmeta name=\u0022theme-color\u0022 content=\u0022#f8fafc\u0022 /\u003E\r\n    \u003Cmeta\r\n      name=\u0022description\u0022\r\n      content=\u0022Shop smartphones, accessories, and trusted mobile repair services at KKK Cell City in Perambalur.\u0022\r\n    /\u003E\r\n    \u003Clink rel=\u0022icon\u0022 type=\u0022image/png\u0022 href=\u0022/images/kkk-cell-city-mark.png\u0022 /\u003E\r\n    \u003Clink rel=\u0022preconnect\u0022 href=\u0022https://fonts.googleapis.com\u0022 /\u003E\r\n    \u003Clink rel=\u0022preconnect\u0022 href=\u0022https://fonts.gstatic.com\u0022 crossorigin /\u003E\r\n    \u003Clink\r\n      href=\u0022https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800\u0026display=swap\u0022\r\n      rel=\u0022stylesheet\u0022\r\n    /\u003E\r\n    \u003Ctitle\u003EKKK Cell City | Your Trusted Tech Destination\u003C/title\u003E\r\n  \u003C/head\u003E\r\n  \u003Cbody\u003E\r\n    \u003Cdiv id=\u0022root\u0022\u003E\u003C/div\u003E\r\n    \u003Cscript type=\u0022module\u0022 src=\u0022/src/main.tsx\u0022\u003E\u003C/script\u003E\r\n  \u003C/body\u003E\r\n\u003C/html\u003E\r\n",
+        "durationMs": 124
+      }
+    ],
+    "executions": [
+      {
+        "source": "production-build",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.CMD",
+        "args": [
+          "run",
+          "build"
+        ],
+        "cwd": "D:\\Projects\\KKK-Cell-City",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32"
+      },
+      {
+        "source": "tests-pass",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.CMD",
+        "args": [
+          "test"
+        ],
+        "cwd": "D:\\Projects\\KKK-Cell-City",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32"
+      },
+      {
+        "source": "home-route-serves",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.CMD",
+        "args": [
+          "run",
+          "dev",
+          "--",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "5174",
+          "--strictPort"
+        ],
+        "cwd": "D:\\Projects\\KKK-Cell-City",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32"
+      },
+      {
+        "source": "samsung-details-route-serves",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.CMD",
+        "args": [
+          "run",
+          "dev",
+          "--",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "5174",
+          "--strictPort"
+        ],
+        "cwd": "D:\\Projects\\KKK-Cell-City",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32"
+      }
+    ]
+  }
+}

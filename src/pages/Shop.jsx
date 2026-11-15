@@ -9,7 +9,7 @@ import { useSearchParams } from "react-router-dom";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
-import { formatINR, products } from "../data/products";
+import { products } from "../data/products";
 
 /**
  * @param {{
@@ -23,9 +23,6 @@ export default function Shop({
   const [search, setSearch] = useState(searchParams.get("q") ?? "");
   const [selectedBrand, setSelectedBrand] = useState("");
   const [sort, setSort] = useState("popular");
-  const [activeProduct, setActiveProduct] = useState(
-    /** @type {import("../data/products").Product | null} */ (null),
-  );
 
   useEffect(() => {
     setSearch(searchParams.get("q") ?? "");
@@ -56,9 +53,8 @@ export default function Shop({
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 xl:grid-cols-4">
       {visibleProducts.map((product) => (
         <ProductCard
-          key={product.name}
+          key={product.id}
           product={product}
-          onViewDetails={() => setActiveProduct(product)}
           reducedVisual
         />
       ))}
@@ -190,52 +186,6 @@ export default function Shop({
         </div>
       </main>
       <Footer />
-
-      {activeProduct && (
-        <div
-          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
-          onClick={() => setActiveProduct(null)}
-          onKeyDown={(event) => {
-            if (event.key === "Escape") setActiveProduct(null);
-          }}
-        >
-          <section
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="product-dialog-title"
-            className="relative w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <button
-              onClick={() => setActiveProduct(null)}
-              aria-label="Close product details"
-              className="absolute right-4 top-4 rounded-lg p-2 text-slate-400 transition hover:bg-slate-800/60 hover:text-white"
-            >
-              <X size={18} />
-            </button>
-            <h2
-              id="product-dialog-title"
-              className="text-2xl font-bold text-white"
-            >
-              {activeProduct.name}
-            </h2>
-            <div className="mt-5 flex items-baseline gap-2">
-              <span className="text-xl font-bold text-white">
-                {formatINR(activeProduct.price)}
-              </span>
-              {activeProduct.listPrice && (
-                <span className="text-sm text-slate-500 line-through">
-                  {formatINR(activeProduct.listPrice)}
-                </span>
-              )}
-            </div>
-            <p className="mt-5 text-sm leading-6 text-slate-400">
-              Find this smartphone at KKK Cell City.
-              Visit our Perambalur showroom or contact our team for availability.
-            </p>
-          </section>
-        </div>
-      )}
     </div>
   );
 }

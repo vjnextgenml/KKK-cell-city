@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react";
 import {
+  KeyRound,
   Menu,
   Search,
   X,
@@ -50,7 +51,7 @@ export default function Navbar(_props: NavbarProps) {
             <span className="block text-sm font-bold tracking-tight text-slate-900 sm:text-base">
               KKK Cell City
             </span>
-            <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+            <span className="hidden text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500 sm:block">
               Mobile · Accessories · Repairs
             </span>
           </span>
@@ -109,6 +110,17 @@ export default function Navbar(_props: NavbarProps) {
               >
                 <Search size={19} />
               </button>
+            )}
+            {!searchOpen && (
+              <Link
+                to="/admin/login"
+                aria-label="Admin Login"
+                title="Admin Login"
+                className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-blue-100 bg-blue-50 px-2.5 text-xs font-semibold text-blue-700 transition hover:bg-blue-100 sm:px-3 sm:text-sm"
+              >
+                <KeyRound size={16} aria-hidden="true" />
+                <span className="hidden sm:inline">Admin Login</span>
+              </Link>
             )}
             <button
               onClick={() => setMenuOpen((open) => !open)}

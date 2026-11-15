@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import About from "./pages/About.jsx";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminLogin from "./pages/AdminLogin";
 import Home from "./pages/Home.jsx";
+import ProductDetails from "./pages/ProductDetails";
 import Repairs from "./pages/Repairs.jsx";
 import Shop from "./pages/Shop.jsx";
 import {
@@ -24,6 +27,7 @@ function ScrollToTopOnNavigation() {
 
 export default function App() {
   const [cartCount, setCartCount] = useState(0);
+  const [adminAuthenticated, setAdminAuthenticated] = useState(false);
 
   const storeProps = {
     cartCount,
@@ -34,8 +38,25 @@ export default function App() {
     <>
       <ScrollToTopOnNavigation />
       <Routes>
+        <Route
+          path="/admin/login"
+          element={
+            <AdminLogin onLoginSuccess={() => setAdminAuthenticated(true)} />
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            adminAuthenticated ? (
+              <AdminDashboard />
+            ) : (
+              <Navigate to="/admin/login" replace />
+            )
+          }
+        />
         <Route path="/" element={<Home {...storeProps} />} />
         <Route path="/shop" element={<Shop {...storeProps} />} />
+        <Route path="/product/:productId" element={<ProductDetails {...storeProps} />} />
         <Route path="/categories" element={<CategoriesPage {...storeProps} />} />
         <Route path="/repairs" element={<Repairs {...storeProps} />} />
         <Route path="/about" element={<About {...storeProps} />} />

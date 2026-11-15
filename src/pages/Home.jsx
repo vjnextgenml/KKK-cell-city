@@ -1,5 +1,4 @@
 // @ts-check
-import { useState } from "react";
 import {
   ArrowRight,
   BatteryCharging,
@@ -11,17 +10,15 @@ import {
   MessageCircle,
   ShieldCheck,
   Smartphone,
-  Speaker,
   Store,
   Watch,
   Wrench,
-  X,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
-import { formatINR, products } from "../data/products";
+import { products } from "../data/products";
 
 const categories = [
   { name: "Mobile Phones", icon: Smartphone, query: "Smartphones", images: [{ src: "/images/category-mobile-phones.jpg", alt: "Assorted modern smartphones" }] },
@@ -34,8 +31,15 @@ const categories = [
       { src: "/images/category-chargers-cables.jpg", alt: "Phone charging cables" },
     ],
   },
-  { name: "Earphones & Headphones", icon: Headphones, query: "Earphones & headphones", images: [{ src: "/images/category-headphones.jpg", alt: "Wireless headphones" }] },
-  { name: "Bluetooth Speakers", icon: Speaker, query: "Bluetooth speakers", images: [{ src: "/images/category-bluetooth-speakers.jpg", alt: "Portable Bluetooth speaker" }] },
+  {
+    name: "Headphones & Speakers",
+    icon: Headphones,
+    query: "Headphones & Speakers",
+    images: [
+      { src: "/images/category-headphones.jpg", alt: "Headphones" },
+      { src: "/images/category-bluetooth-speakers.jpg", alt: "Portable Bluetooth speaker" },
+    ],
+  },
   { name: "Power Banks", icon: BatteryCharging, query: "Power banks", images: [{ src: "/images/category-power-banks.jpg", alt: "Portable power banks" }] },
   { name: "Cases & Screen Guards", icon: ShieldCheck, query: "Mobile cases & screen guards" },
   { name: "Smartwatches", icon: Watch, query: "Smart watches", images: [{ src: "/images/category-smartwatches.jpg", alt: "Smart watches" }] },
@@ -61,8 +65,8 @@ const accessories = [
     imageAlt: "Smartphones protected for everyday use",
   },
   {
-    name: "Audio accessories",
-    detail: "Explore earphones, headphones, and portable speakers.",
+    name: "Headphones & Speakers",
+    detail: "Explore headphones and portable speakers.",
     image: "/images/category-headphones.jpg",
     imageAlt: "Wireless headphones",
   },
@@ -105,9 +109,6 @@ const reasons = [
  * }} props
  */
 export default function Home({ cartCount }) {
-  const [activeProduct, setActiveProduct] = useState(
-    /** @type {import("../data/products").Product | null} */ (null),
-  );
   const featuredProducts = products.slice(0, 5);
 
   return (
@@ -238,9 +239,8 @@ export default function Home({ cartCount }) {
           <div className="category-strip flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2">
             {featuredProducts.map((product) => (
               <ProductCard
-                key={product.name}
+                key={product.id}
                 product={product}
-                onViewDetails={() => setActiveProduct(product)}
                 compact
               />
             ))}
@@ -405,46 +405,6 @@ export default function Home({ cartCount }) {
         </section>
       </main>
       <Footer />
-
-      {activeProduct && (
-        <div
-          className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/75 p-4 backdrop-blur-sm"
-          onClick={() => setActiveProduct(null)}
-          onKeyDown={(event) => {
-            if (event.key === "Escape") setActiveProduct(null);
-          }}
-        >
-          <section
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="featured-product-title"
-            className="relative w-full max-w-md rounded-2xl border border-slate-700 bg-slate-900 p-6 shadow-2xl"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <button
-              type="button"
-              onClick={() => setActiveProduct(null)}
-              aria-label="Close product details"
-              className="absolute right-4 top-4 rounded-lg p-2 text-slate-400 transition hover:bg-slate-800 hover:text-white"
-            >
-              <X size={18} />
-            </button>
-            <h2 id="featured-product-title" className="mt-2 text-2xl font-bold text-white">
-              {activeProduct.name}
-            </h2>
-            <div className="mt-5 flex items-baseline gap-2">
-              <span className="text-xl font-bold text-white">{formatINR(activeProduct.price)}</span>
-              {activeProduct.listPrice && (
-                <span className="text-sm text-slate-500 line-through">{formatINR(activeProduct.listPrice)}</span>
-              )}
-            </div>
-            <p className="mt-5 text-sm leading-6 text-slate-400">
-              Find this phone at KKK Cell City. Contact our
-              Perambalur team for current availability.
-            </p>
-          </section>
-        </div>
-      )}
     </div>
   );
 }

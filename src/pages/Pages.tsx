@@ -37,7 +37,7 @@ function ProductGrid({ items }: {
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {items.map((product) => (
         <ProductCard
-          key={product.name}
+          key={product.id}
           product={product}
         />
       ))}
@@ -149,12 +149,268 @@ export function HomePage(props: StoreProps) {
   );
 }
 
-const categories = [
-  { name: "Chargers & data cables", detail: "Power up and stay connected.", icon: "↯" },
-  { name: "Power banks", detail: "A little extra charge, anywhere.", icon: "▣" },
-  { name: "Bluetooth speakers", detail: "Bring your favorite sounds along.", icon: "♫" },
-  { name: "Smart watches", detail: "Stay in sync with your day.", icon: "◷" },
+const accessoryCategories = [
+  { name: "Chargers & Data Cables" },
+  { name: "Headphones & Speakers" },
+  { name: "Power Banks" },
+  { name: "Cases & Screen Guards" },
+  { name: "Smartwatches" },
 ];
+
+const categoryProductsByName: Record<string, Product[]> = {
+  "Chargers & Data Cables": [
+    {
+      id: "dummy-fast-charger",
+      name: "Fast Charger Pro",
+      brand: "KKK Accessories",
+      price: 1499,
+      color: "from-blue-200 to-blue-100",
+      initials: "FC",
+      productType: "accessory",
+      images: ["/images/category-chargers-cables.jpg"],
+      category: "Chargers & Data Cables",
+      specifications: {
+        Type: "USB-C fast charger",
+        Output: "20W",
+        Compatibility: "Android + iPhone",
+      },
+    },
+    {
+      id: "dummy-cable-kit",
+      name: "Premium Cable Kit",
+      brand: "KKK Cables",
+      price: 799,
+      color: "from-cyan-200 to-cyan-100",
+      initials: "CK",
+      productType: "accessory",
+      images: ["/images/category-chargers-cables.jpg"],
+      category: "Chargers & Data Cables",
+      specifications: {
+        Type: "USB-C data cable",
+        Length: "1.5 meters",
+        Compatibility: "Smartphones and tablets",
+      },
+    },
+    {
+      id: "dummy-wireless-pad",
+      name: "Wireless Charging Pad",
+      brand: "KKK Gear",
+      price: 1999,
+      color: "from-sky-200 to-indigo-100",
+      initials: "WP",
+      productType: "accessory",
+      images: ["/images/category-chargers-cables.jpg"],
+      category: "Chargers & Data Cables",
+      specifications: {
+        Type: "Charging pad",
+        Power: "15W",
+        Compatibility: "Qi-enabled devices",
+      },
+    },
+  ],
+  "Headphones & Speakers": [
+    {
+      id: "dummy-wireless-headphones",
+      name: "SoundBeam Headphones",
+      brand: "KKK Audio",
+      price: 2499,
+      color: "from-violet-200 to-purple-100",
+      initials: "SB",
+      productType: "accessory",
+      images: ["/images/category-headphones.jpg"],
+      category: "Headphones & Speakers",
+      specifications: {
+        Type: "Wireless headphones",
+        Battery: "18 hours",
+        Connectivity: "Bluetooth 5.3",
+      },
+    },
+    {
+      id: "dummy-mini-speaker",
+      name: "Mini Pulse Speaker",
+      brand: "KKK Audio",
+      price: 2199,
+      color: "from-pink-200 to-rose-100",
+      initials: "MP",
+      productType: "accessory",
+      images: ["/images/category-bluetooth-speakers.jpg"],
+      category: "Headphones & Speakers",
+      specifications: {
+        Type: "Portable speaker",
+        Volume: "Rich bass output",
+        Battery: "8 hours playtime",
+      },
+    },
+    {
+      id: "dummy-neckband",
+      name: "Breeze Neckband",
+      brand: "KKK Audio",
+      price: 1699,
+      color: "from-slate-200 to-slate-100",
+      initials: "BN",
+      productType: "accessory",
+      images: ["/images/category-headphones.jpg"],
+      category: "Headphones & Speakers",
+      specifications: {
+        Type: "Neckband earphones",
+        Battery: "12 hours",
+        Features: "IPX5 water resistant",
+      },
+    },
+  ],
+  "Power Banks": [
+    {
+      id: "dummy-power-bank-1",
+      name: "Power Bank Elite",
+      brand: "KKK Power",
+      price: 2999,
+      color: "from-amber-200 to-yellow-100",
+      initials: "PE",
+      productType: "accessory",
+      images: ["/images/category-power-banks.jpg"],
+      category: "Power Banks",
+      specifications: {
+        Capacity: "10000mAh",
+        Output: "22.5W",
+        Ports: "USB-C + USB-A",
+      },
+    },
+    {
+      id: "dummy-power-bank-2",
+      name: "Pocket Charge Mini",
+      brand: "KKK Power",
+      price: 1799,
+      color: "from-yellow-200 to-orange-100",
+      initials: "PC",
+      productType: "accessory",
+      images: ["/images/category-power-banks.jpg"],
+      category: "Power Banks",
+      specifications: {
+        Capacity: "6000mAh",
+        Output: "18W",
+        Weight: "Lightweight design",
+      },
+    },
+    {
+      id: "dummy-power-bank-3",
+      name: "UltraCore Bank",
+      brand: "KKK Power",
+      price: 3999,
+      color: "from-orange-200 to-red-100",
+      initials: "UC",
+      productType: "accessory",
+      images: ["/images/category-power-banks.jpg"],
+      category: "Power Banks",
+      specifications: {
+        Capacity: "20000mAh",
+        Output: "30W",
+        Feature: "Dual charging support",
+      },
+    },
+  ],
+  "Cases & Screen Guards": [
+    {
+      id: "dummy-case-1",
+      name: "Armor Shield Case",
+      brand: "KKK Protection",
+      price: 899,
+      color: "from-slate-200 to-slate-100",
+      initials: "AS",
+      productType: "accessory",
+      images: ["/images/category-mobile-phones.jpg"],
+      category: "Cases & Screen Guards",
+      specifications: {
+        Type: "Shockproof case",
+        Material: "TPU + polycarbonate",
+        Fit: "Premium fit",
+      },
+    },
+    {
+      id: "dummy-case-2",
+      name: "ClearGuard Screen Film",
+      brand: "KKK Protection",
+      price: 599,
+      color: "from-emerald-200 to-lime-100",
+      initials: "CG",
+      productType: "accessory",
+      images: ["/images/category-mobile-phones.jpg"],
+      category: "Cases & Screen Guards",
+      specifications: {
+        Type: "Tempered glass",
+        Protection: "Scratch resistant",
+        Finish: "Ultra-clear",
+      },
+    },
+    {
+      id: "dummy-case-3",
+      name: "MagSafe Sleeve",
+      brand: "KKK Protection",
+      price: 1299,
+      color: "from-rose-200 to-pink-100",
+      initials: "MS",
+      productType: "accessory",
+      images: ["/images/category-mobile-phones.jpg"],
+      category: "Cases & Screen Guards",
+      specifications: {
+        Type: "Leather case",
+        MagSafe: "Compatible",
+        Finish: "Slim fit",
+      },
+    },
+  ],
+  "Smartwatches": [
+    {
+      id: "dummy-watch-1",
+      name: "Pulse Smartwatch",
+      brand: "KKK Wear",
+      price: 3499,
+      color: "from-indigo-200 to-blue-100",
+      initials: "PS",
+      productType: "accessory",
+      images: ["/images/category-smartwatches.jpg"],
+      category: "Smartwatches",
+      specifications: {
+        Display: "AMOLED display",
+        Battery: "2-day battery",
+        Tracking: "Heart + sleep tracking",
+      },
+    },
+    {
+      id: "dummy-watch-2",
+      name: "SportFit Watch",
+      brand: "KKK Wear",
+      price: 2999,
+      color: "from-cyan-200 to-teal-100",
+      initials: "SF",
+      productType: "accessory",
+      images: ["/images/category-smartwatches.jpg"],
+      category: "Smartwatches",
+      specifications: {
+        Display: "Bright touchscreen",
+        Battery: "48 hours",
+        Features: "Workout tracking",
+      },
+    },
+    {
+      id: "dummy-watch-3",
+      name: "Elite Time Watch",
+      brand: "KKK Wear",
+      price: 4999,
+      color: "from-violet-200 to-fuchsia-100",
+      initials: "ET",
+      productType: "accessory",
+      images: ["/images/category-smartwatches.jpg"],
+      category: "Smartwatches",
+      specifications: {
+        Display: "1.9 inch AMOLED",
+        Battery: "3-day battery",
+        Features: "GPS + notifications",
+      },
+    },
+  ],
+};
+
+export const accessoryProducts = Object.values(categoryProductsByName).flat();
 
 export function CategoriesPage(props: StoreProps) {
   return (
@@ -163,10 +419,29 @@ export function CategoriesPage(props: StoreProps) {
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-400">Explore more</p>
         <h1 className="mt-2 text-3xl font-bold text-white">Shop by category</h1>
         <p className="mt-2 text-slate-400">The everyday essentials and little upgrades that make your tech yours.</p>
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {categories.map((category) => <Link key={category.name} to="/shop" className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-blue-200 hover:bg-blue-50 hover:shadow-glow"><span className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-2xl text-blue-700">{category.icon}</span><h2 className="mt-5 font-semibold text-slate-900">{category.name}</h2><p className="mt-1 text-sm text-slate-600">{category.detail}</p><span className="mt-5 inline-flex items-center gap-1 text-xs font-semibold text-blue-700">Browse shop <ArrowRight size={13} className="transition group-hover:translate-x-1" /></span></Link>)}
+
+        <div className="mt-8 space-y-10">
+          {accessoryCategories.map((category) => {
+            const productsForCategory = categoryProductsByName[category.name] ?? [];
+
+            return (
+              <section key={category.name} className="space-y-4">
+                <Link
+                  to="/shop"
+                  className="group inline-flex min-h-10 max-w-[260px] items-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:bg-blue-50 hover:shadow-glow"
+                >
+                  <h2 className="text-sm font-semibold text-slate-900">{category.name}</h2>
+                </Link>
+
+                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                  {productsForCategory.map((product) => (
+                    <ProductCard key={product.id} product={product} reducedVisual />
+                  ))}
+                </div>
+              </section>
+            );
+          })}
         </div>
-        <div className="mt-14"><h2 className="mb-5 text-xl font-bold text-white">Smartphones worth a look</h2><ProductGrid items={products.slice(0, 4)} /></div>
       </main>
     </StoreShell>
   );
