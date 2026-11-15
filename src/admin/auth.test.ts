@@ -20,6 +20,6 @@ describe("admin demo credentials", () => {
     expect(verifyAdminCredentials("admin", "1234", config)).toBe(true);
     expect(verifyAdminCredentials("wrong-user", "1234", config)).toBe(false);
     expect(verifyAdminCredentials("admin", "wrong-password", config)).toBe(false);
-    expect(verifyAdminCredentials("admin", "1234")).toBe(false);
+    expect(verifyAdminCredentials("admin", "1234", {})).toBe(false);
   });
 });

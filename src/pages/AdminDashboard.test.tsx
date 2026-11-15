@@ -13,7 +13,7 @@ describe("admin dashboard", () => {
 
     expect(markup).toContain("Admin workspace");
     expect(markup).toContain("Manage Mobile Phones");
-    expect(markup).toContain("Manage Accessories");
+    expect(markup).not.toContain("Manage Accessories");
     expect(markup).toContain("Back to Website");
     expect(markup).toContain("frontend demo login is not security");
     expect(markup).not.toContain('aria-label="Main navigation"');

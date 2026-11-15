@@ -239,11 +239,9 @@ export default function ProductForm({
                     />
                   </label>
                 )}
-                <label className="block text-sm font-medium text-slate-700">
-                  Category
-                  {isMobile ? (
-                    <input value="Smartphones" readOnly className={`${inputClass} mt-1.5 bg-slate-50`} />
-                  ) : (
+                {!isMobile && (
+                  <label className="block text-sm font-medium text-slate-700">
+                    Category
                     <select
                       value={draft.category}
                       onChange={(event) =>
@@ -256,9 +254,9 @@ export default function ProductForm({
                     >
                       {accessoryCategories.map((category) => <option key={category}>{category}</option>)}
                     </select>
-                  )}
-                  {errors.category && <span className="mt-1 block text-xs text-rose-600">{errors.category}</span>}
-                </label>
+                    {errors.category && <span className="mt-1 block text-xs text-rose-600">{errors.category}</span>}
+                  </label>
+                )}
                 {!isMobile && draft.productType === "accessory" && (
                   <label className="block text-sm font-medium text-slate-700">
                     Product type

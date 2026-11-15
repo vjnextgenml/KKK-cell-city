@@ -1,5 +1,5 @@
-import { Edit2, PackageOpen, Plus, Search, Trash2 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { ChevronDown, Edit2, PackageOpen, Plus, Search, Trash2 } from "lucide-react";
+import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import type { Accessory, AdminProduct, MobilePhone, ProductAvailability } from "../types";
 import { accessoryCategories } from "../types";
 import { formatINR } from "../../data/products";
@@ -19,6 +19,151 @@ const availabilityOptions: ProductAvailability[] = [
   "Unknown",
 ];
 
+type FilterOption = {
+  label: string;
+  value: string;
+};
+
+function FilterDropdown({
+  label,
+  value,
+  options,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  options: FilterOption[];
+  onChange: (value: string) => void;
+}) {
+  const listboxId = useId();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const optionRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [opensAbove, setOpensAbove] = useState(false);
+  const [maxHeight, setMaxHeight] = useState(240);
+  const selectedOption = options.find((option) => option.value === value) ?? options[0];
+
+  useEffect(() => {
+    function closeOnOutsideClick(event: PointerEvent) {
+      if (!containerRef.current?.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+
+    document.addEventListener("pointerdown", closeOnOutsideClick);
+    return () => document.removeEventListener("pointerdown", closeOnOutsideClick);
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const selectedIndex = Math.max(
+      options.findIndex((option) => option.value === value),
+      0,
+    );
+    optionRefs.current[selectedIndex]?.focus();
+  }, [isOpen, options, value]);
+
+  function openMenu() {
+    const trigger = triggerRef.current;
+    if (!trigger) return;
+
+    const bounds = trigger.getBoundingClientRect();
+    const desiredHeight = Math.min(240, options.length * 40);
+    const spaceBelow = window.innerHeight - bounds.bottom - 8;
+    const spaceAbove = bounds.top - 8;
+    const openUp = spaceBelow < desiredHeight && spaceAbove > spaceBelow;
+
+    setOpensAbove(openUp);
+    setMaxHeight(Math.max(0, Math.min(desiredHeight, openUp ? spaceAbove : spaceBelow)));
+    setIsOpen(true);
+  }
+
+  function handleOptionKeyDown(
+    index: number,
+    event: KeyboardEvent<HTMLButtonElement>,
+  ) {
+    let nextIndex: number | undefined;
+    if (event.key === "ArrowDown") nextIndex = (index + 1) % options.length;
+    if (event.key === "ArrowUp") nextIndex = (index - 1 + options.length) % options.length;
+    if (event.key === "Home") nextIndex = 0;
+    if (event.key === "End") nextIndex = options.length - 1;
+
+    if (nextIndex !== undefined) {
+      event.preventDefault();
+      optionRefs.current[nextIndex]?.focus();
+    } else if (event.key === "Escape") {
+      event.preventDefault();
+      setIsOpen(false);
+      triggerRef.current?.focus();
+    }
+  }
+
+  return (
+    <div ref={containerRef} className="relative min-w-0">
+      <button
+        ref={triggerRef}
+        type="button"
+        role="combobox"
+        aria-label={label}
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
+        aria-controls={isOpen ? listboxId : undefined}
+        onClick={() => (isOpen ? setIsOpen(false) : openMenu())}
+        onKeyDown={(event) => {
+          if (!isOpen && (event.key === "ArrowDown" || event.key === "ArrowUp")) {
+            event.preventDefault();
+            openMenu();
+          } else if (isOpen && event.key === "Escape") {
+            setIsOpen(false);
+          }
+        }}
+        className="admin-input flex items-center justify-between gap-2 text-left"
+      >
+        <span className="min-w-0 truncate">{selectedOption?.label ?? ""}</span>
+        <ChevronDown size={16} className="shrink-0 text-slate-500" aria-hidden="true" />
+      </button>
+      {isOpen && (
+        <div
+          id={listboxId}
+          role="listbox"
+          aria-label={label}
+          style={{ maxHeight }}
+          className={`absolute left-0 z-50 w-full overflow-y-auto rounded-lg border border-slate-200 bg-white p-1 shadow-lg ${
+            opensAbove ? "bottom-full mb-1" : "top-full mt-1"
+          }`}
+        >
+          {options.map((option, index) => (
+            <button
+              key={option.value}
+              ref={(element) => {
+                optionRefs.current[index] = element;
+              }}
+              type="button"
+              role="option"
+              aria-selected={value === option.value}
+              tabIndex={0}
+              onClick={() => {
+                onChange(option.value);
+                setIsOpen(false);
+                triggerRef.current?.focus();
+              }}
+              onKeyDown={(event) => handleOptionKeyDown(index, event)}
+              className={`w-full rounded-md px-3 py-2.5 text-left text-sm hover:bg-blue-50 focus:bg-blue-50 focus:outline-none ${
+                value === option.value
+                  ? "bg-blue-50 font-semibold text-blue-800"
+                  : "text-slate-700"
+              }`}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function ProductTable({
   kind,
   products,
@@ -37,16 +182,11 @@ export default function ProductTable({
         .includes(query);
       return (
         matchesQuery &&
-        (!category || product.category === category) &&
+        (kind === "mobile" || !category || product.category === category) &&
         (!availability || product.availability === availability)
       );
     });
-  }, [products, search, category, availability]);
-
-  const categories =
-    kind === "mobile"
-      ? ["Smartphones"]
-      : [...accessoryCategories];
+  }, [kind, products, search, category, availability]);
 
   return (
     <section className="space-y-5">
@@ -71,7 +211,13 @@ export default function ProductTable({
         </button>
       </div>
 
-      <div className="grid gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm md:grid-cols-[minmax(220px,1fr)_200px_180px]">
+      <div
+        className={`grid gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm ${
+          kind === "mobile"
+            ? "md:grid-cols-[minmax(220px,1fr)_180px]"
+            : "md:grid-cols-[minmax(220px,1fr)_200px_180px]"
+        }`}
+      >
         <label className="relative block">
           <span className="sr-only">Search products</span>
           <Search size={17} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" aria-hidden="true" />
@@ -82,20 +228,26 @@ export default function ProductTable({
             className="admin-input pl-10"
           />
         </label>
-        <label>
-          <span className="sr-only">Filter by category</span>
-          <select value={category} onChange={(event) => setCategory(event.target.value)} className="admin-input">
-            <option value="">All categories</option>
-            {categories.map((item) => <option key={item} value={item}>{item}</option>)}
-          </select>
-        </label>
-        <label>
-          <span className="sr-only">Filter by availability</span>
-          <select value={availability} onChange={(event) => setAvailability(event.target.value)} className="admin-input">
-            <option value="">All availability</option>
-            {availabilityOptions.map((item) => <option key={item} value={item}>{item}</option>)}
-          </select>
-        </label>
+        {kind === "accessory" && (
+          <FilterDropdown
+            label="Filter by category"
+            value={category}
+            options={[
+              { label: "All categories", value: "" },
+              ...accessoryCategories.map((item) => ({ label: item, value: item })),
+            ]}
+            onChange={setCategory}
+          />
+        )}
+        <FilterDropdown
+          label="Filter by availability"
+          value={availability}
+          options={[
+            { label: "All availability", value: "" },
+            ...availabilityOptions.map((item) => ({ label: item, value: item })),
+          ]}
+          onChange={setAvailability}
+        />
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">

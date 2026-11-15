@@ -1,6 +1,5 @@
 import {
   ArrowLeft,
-  Boxes,
   LayoutDashboard,
   Smartphone,
   Store,
@@ -8,7 +7,7 @@ import {
 import { Link } from "react-router-dom";
 import type { ReactNode } from "react";
 
-export type AdminSection = "dashboard" | "mobile" | "accessories";
+export type AdminSection = "dashboard" | "mobile";
 
 type AdminLayoutProps = {
   activeSection: AdminSection;
@@ -23,7 +22,6 @@ const navigation: Array<{
 }> = [
   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
   { id: "mobile", label: "Manage Mobile Phones", icon: Smartphone },
-  { id: "accessories", label: "Manage Accessories", icon: Boxes },
 ];
 
 export default function AdminLayout({

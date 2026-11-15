@@ -1,6 +1,5 @@
 import {
   AlertCircle,
-  Boxes,
   CheckCircle2,
   LoaderCircle,
   Package,
@@ -32,7 +31,7 @@ export default function AdminDashboard() {
   const [accessories, setAccessories] = useState<Accessory[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
-  const [formKind, setFormKind] = useState<"mobile" | "accessory" | null>(null);
+  const [formKind, setFormKind] = useState<"mobile" | null>(null);
   const [editingProduct, setEditingProduct] = useState<AdminProduct>();
   const [notice, setNotice] = useState<Notice>();
 
@@ -66,7 +65,7 @@ export default function AdminDashboard() {
     .sort((left, right) => right.updatedAt.localeCompare(left.updatedAt))
     .slice(0, 5);
 
-  function openForm(kind: "mobile" | "accessory", product?: AdminProduct) {
+  function openForm(kind: "mobile", product?: AdminProduct) {
     setEditingProduct(product);
     setFormKind(kind);
     setNotice(undefined);
@@ -79,19 +78,14 @@ export default function AdminDashboard() {
 
   async function saveProduct(draft: ProductDraft) {
     try {
-      if (draft.productType === "mobile") {
-        const saved = editingProduct
-          ? await adminProductService.updateMobilePhone(editingProduct.id, draft)
-          : await adminProductService.createMobilePhone(draft);
-        if (!saved) throw new Error("Mobile phone no longer exists.");
-        setMobilePhones(await adminProductService.getMobilePhones());
-      } else {
-        const saved = editingProduct
-          ? await adminProductService.updateAccessory(editingProduct.id, draft)
-          : await adminProductService.createAccessory(draft);
-        if (!saved) throw new Error("Accessory no longer exists.");
-        setAccessories(await adminProductService.getAccessories());
+      if (draft.productType !== "mobile") {
+        throw new Error("Only mobile phone management is available in this admin.");
       }
+      const saved = editingProduct
+        ? await adminProductService.updateMobilePhone(editingProduct.id, draft)
+        : await adminProductService.createMobilePhone(draft);
+      if (!saved) throw new Error("Mobile phone no longer exists.");
+      setMobilePhones(await adminProductService.getMobilePhones());
       setNotice({
         kind: "success",
         message: editingProduct ? "Product updated in this session." : "Product added in this session.",
@@ -103,15 +97,14 @@ export default function AdminDashboard() {
   }
 
   async function deleteProduct(product: AdminProduct) {
+    if (!isMobilePhone(product)) {
+      setNotice({ kind: "error", message: "Only mobile phone management is available in this admin." });
+      return;
+    }
     if (!window.confirm(`Delete “${product.name}” from this session’s product list?`)) return;
     try {
-      if (isMobilePhone(product)) {
-        await adminProductService.deleteMobilePhone(product.id);
-        setMobilePhones(await adminProductService.getMobilePhones());
-      } else {
-        await adminProductService.deleteAccessory(product.id);
-        setAccessories(await adminProductService.getAccessories());
-      }
+      await adminProductService.deleteMobilePhone(product.id);
+      setMobilePhones(await adminProductService.getMobilePhones());
       setNotice({ kind: "success", message: "Product deleted from this session." });
     } catch {
       setNotice({ kind: "error", message: "The product could not be deleted. Please try again." });
@@ -156,14 +149,6 @@ export default function AdminDashboard() {
           onEdit={(product) => openForm("mobile", product)}
           onDelete={(product) => void deleteProduct(product)}
         />
-      ) : section === "accessories" ? (
-        <ProductTable
-          kind="accessory"
-          products={accessories}
-          onAdd={() => openForm("accessory")}
-          onEdit={(product) => openForm("accessory", product)}
-          onDelete={(product) => void deleteProduct(product)}
-        />
       ) : (
         <section className="space-y-6">
           <div>
@@ -171,9 +156,8 @@ export default function AdminDashboard() {
             <h2 className="mt-1 text-2xl font-bold tracking-tight text-slate-900">Dashboard</h2>
             <p className="mt-1 text-sm text-slate-500">A summary of the current in-memory catalog.</p>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
             <SummaryCard icon={Smartphone} label="Total Mobile Phones" value={mobilePhones.length} />
-            <SummaryCard icon={Boxes} label="Total Accessories" value={accessories.length} />
             <SummaryCard icon={Package} label="Total Products" value={allProducts.length} />
             <SummaryCard icon={Tag} label="Products with Offers" value={offerCount} />
           </div>
@@ -205,14 +189,10 @@ export default function AdminDashboard() {
               <p className="px-5 py-8 text-center text-sm text-slate-500">No catalog entries to display.</p>
             )}
           </section>
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div>
             <button type="button" onClick={() => setSection("mobile")} className="rounded-xl border border-slate-200 bg-white p-4 text-left shadow-sm hover:border-blue-200">
               <span className="flex items-center gap-2 text-sm font-semibold text-slate-900"><Smartphone size={17} className="text-blue-700" /> Manage mobile phones</span>
               <span className="mt-1 block pl-6 text-xs text-slate-500">Add, edit, filter, or remove mobile phone listings.</span>
-            </button>
-            <button type="button" onClick={() => setSection("accessories")} className="rounded-xl border border-slate-200 bg-white p-4 text-left shadow-sm hover:border-blue-200">
-              <span className="flex items-center gap-2 text-sm font-semibold text-slate-900"><Boxes size={17} className="text-blue-700" /> Manage accessories</span>
-              <span className="mt-1 block pl-6 text-xs text-slate-500">Manage listings in existing accessory categories.</span>
             </button>
           </div>
         </section>
@@ -241,13 +221,13 @@ function SummaryCard({
   value: number;
 }) {
   return (
-    <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <p className="text-sm font-medium text-slate-500">{label}</p>
-          <p className="mt-3 text-3xl font-bold tracking-tight text-slate-900">{value}</p>
+    <article className="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm sm:p-5">
+      <div className="flex items-start justify-between gap-2 sm:gap-3">
+        <div className="min-w-0">
+          <p className="text-xs font-medium text-slate-500 sm:text-sm">{label}</p>
+          <p className="mt-3 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">{value}</p>
         </div>
-        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-700 sm:h-10 sm:w-10">
           <Icon size={19} aria-hidden="true" />
         </span>
       </div>

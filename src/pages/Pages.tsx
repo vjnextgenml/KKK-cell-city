@@ -428,12 +428,14 @@ export function CategoriesPage(props: StoreProps) {
               <section key={category.name} className="space-y-4">
                 <Link
                   to="/shop"
-                  className="group inline-flex min-h-10 max-w-[260px] items-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:bg-blue-50 hover:shadow-glow"
+                  className="group mx-auto block w-fit text-center"
                 >
-                  <h2 className="text-sm font-semibold text-slate-900">{category.name}</h2>
+                  <h2 className="bg-gradient-to-r from-blue-700 via-blue-500 to-cyan-500 bg-clip-text text-lg font-bold text-transparent drop-shadow-[0_1px_1px_rgba(37,99,235,0.18)] transition-[filter] group-hover:brightness-110 sm:text-xl">
+                    {category.name}
+                  </h2>
                 </Link>
 
-                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-3">
                   {productsForCategory.map((product) => (
                     <ProductCard key={product.id} product={product} reducedVisual />
                   ))}

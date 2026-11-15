@@ -13,6 +13,7 @@ describe("admin product specification forms", () => {
       <ProductForm kind="mobile" onCancel={() => {}} onSave={() => {}} />,
     );
 
+    expect(markup).not.toContain("Category");
     expect(markup).toContain("Storage (GB)");
     expect(markup).toContain("Colours");
     expect(markup).toContain("Mobile Specifications");
@@ -24,6 +25,7 @@ describe("admin product specification forms", () => {
       <ProductForm kind="accessory" onCancel={() => {}} onSave={() => {}} />,
     );
 
+    expect(markup).toContain("Category");
     expect(markup).toContain("Charger");
     expect(markup).toContain("Type");
     expect(markup).toContain("Output");
